@@ -5,4 +5,4 @@ SQLAlchemy>=1.4
 WTForms>=3.0
 python-dotenv
 gunicorn
-Flask-SQLAlchemy
+
