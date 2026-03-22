@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Attendance Report{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <div class="card mb-4">
+      <div class="card-header bg-secondary text-white">
+        <h4>Attendance Report</h4>
+      </div>
+      <div class="card-body">
+        <form method="GET" class="row g-3 mb-4">
+          <div class="col-auto">
+            <label for="date" class="col-form-label">Date:</label>
+          </div>
+          <div class="col-auto">
+            <input type="date" id="date" name="date" class="form-control" value="{{ request.args.get('date', '') }}">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-secondary">Filter</button>
+          </div>
+        </form>
+        <table class="table table-bordered table-striped mt-4">
+          <thead>
+            <tr>
+              <th>Roll</th>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in records %}
+            <tr>
+              <td>{{ record.student.roll if record.student else '' }}</td>
+              <td>{{ record.student.name if record.student else '' }}</td>
+              <td>{{ record.date.strftime('%Y-%m-%d') }}</td>
+              <td>
+                {% if record.present %}
+                  <span class="badge bg-success">Present</span>
+                {% else %}
+                  <span class="badge bg-danger">Absent</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="text-center">No records found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
